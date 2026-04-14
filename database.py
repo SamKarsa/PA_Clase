@@ -11,10 +11,10 @@ MONGO_USER = os.getenv("MONGO_USER")
 MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
 MONGO_HOST = os.getenv("MONGO_HOST")
 DATABASE_NAME = os.getenv("DATABASE_NAME")
-DATABSE_COLLECTION = os.getenv("DATABSE_COLLECTION")
+DATABASE_COLLECTION = os.getenv("DATABASE_COLLECTION")
 
 class DatabaseClient:
-    def __init__(self, database_name=DATABASE_NAME , collection_name=DATABSE_COLLECTION):
+    def __init__(self, database_name=DATABASE_NAME , collection_name=DATABASE_COLLECTION):
         if MONGO_USER and MONGO_PASSWORD and MONGO_HOST:
             self.connection_string = f"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}/"
         else:
@@ -25,7 +25,6 @@ class DatabaseClient:
         self.client = None
         self.db = None
         self.collection = None
-
 
     def conectar(self):
         try:
@@ -61,10 +60,9 @@ class DatabaseClient:
         except Exception as e:
             print(f"❌ Error al conectar: {e}")
             return False
-        
 
     def insertar_datos(self, datos):
-        if not self.collection:
+        if self.collection is None:
             print(f"❌ Error: No hay conexión a MongoDB. Llama a conectar() primero")
             return 0
         
@@ -92,9 +90,8 @@ class DatabaseClient:
             print(f"❌ Error al insertar datos: {e}")
             return 0
     
-
     def consultar_datos(self, filtro=None, limite=100):
-        if not self.collection:
+        if self.collection is None:
             print(f"❌ Error: No hay conexión a MongoDB")
             return []
         
@@ -115,9 +112,8 @@ class DatabaseClient:
             print(f"❌ Error al consultar datos: {e}")
             return []
 
-
     def contar_documentos(self, filtro=None):
-        if not self.collection:
+        if self.collection is None:
             print(f"❌ Error: No hay conexión a MongoDB")
             return 0
         
@@ -132,7 +128,6 @@ class DatabaseClient:
             print(f"❌ Error al contar documentos: {e}")
             return 0
         
-
     def desconectar(self):
         if self.client:
             self.client.close()
