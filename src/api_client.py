@@ -1,6 +1,11 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-API_URL = "https://www.datos.gov.co/resource/46yq-tz63.json"
+# Cargar variables de entorno
+load_dotenv()
+
+API_URL = os.getenv("API_URL")
 
 class APIClient:
     def __init__(self, url=API_URL):
