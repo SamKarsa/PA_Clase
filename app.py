@@ -23,7 +23,7 @@ st.markdown("---")
 # SIDEBAR - Configuración
 # ============================================
 with st.sidebar:
-    st.header("⚙️ Configuración de la Aplicación")
+    st.header("⚙️ Configuración")
     
     # URL de la API
     st.subheader("1. API de Datos Abiertos")
