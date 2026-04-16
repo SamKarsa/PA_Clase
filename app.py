@@ -50,7 +50,7 @@ with st.sidebar:
     mongo_user = os.getenv("MONGO_USER")
     mongo_host = os.getenv("MONGO_HOST")
     db_name = os.getenv("DATABASE_NAME", "datos_colombia")
-    collection_name = os.getenv("DATABSE_COLLECTION", "datos_abiertos")
+    collection_name = os.getenv("DATABASE_COLLECTION", "datos_abiertos")
     
     if mongo_user and mongo_host:
         st.success("✅ Credenciales de MongoDB configuradas")

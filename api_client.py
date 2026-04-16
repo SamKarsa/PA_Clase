@@ -22,4 +22,7 @@ class APIClient:
         except requests.exceptions.RequestException as e:
             print (f"error en la consulta: {e}")
             return None
+        
+
+
             
