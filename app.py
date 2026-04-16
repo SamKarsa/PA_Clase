@@ -14,6 +14,7 @@ st.set_page_config(
     layout="wide"
 )
 
+
 # Header
 st.title("🇨🇴 Sistema de Análisis de Entradas de Extranjeros a Colombia")
 st.markdown("### Datos Abiertos Colombia → MongoDB Atlas")
@@ -155,6 +156,4 @@ with st.expander("ℹ️ Información Técnica"):
     
     Las credenciales se gestionan mediante variables de entorno (`.env`).
     """)
- 
-st.markdown("---")
-st.markdown("**Desarrollado con ❤️ usando Python y Streamlit**")
+
