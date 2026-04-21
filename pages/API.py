@@ -8,13 +8,6 @@ from dotenv import load_dotenv
 # Cargar variables de entorno
 load_dotenv()
 
-# Configuración de la página
-st.set_page_config(
-    page_title="API - Sincronización",
-    page_icon="📡",
-    layout="wide"
-)
-
 # Header
 st.title("📡 Sincronización con API de Datos Abiertos")
 st.markdown("### Entradas de Extranjeros a Colombia")
@@ -25,7 +18,7 @@ st.subheader("⚙️ Configuración")
 col1, col2 = st.columns(2)
  
 with col1:
-    api_url = os.getenv("API_URL")
+    api_url = os.getenv("API_URL", "https://www.datos.gov.co/resource/96sh-4v8d.json")
     st.text_input("URL de la API:", value=api_url, disabled=True)
  
 with col2:
@@ -159,3 +152,15 @@ with col1:
  
 with col2:
     st.success("**Recomendación**: Sincroniza los datos una vez al inicio, luego consulta desde MongoDB.")
+
+st.markdown("""
+### ⏰ Sincronización Automática
+
+Además del botón manual, el sistema también sincroniza automáticamente cada **8 horas**.
+
+- **Manual**: Usa el botón "Sincronizar Ahora"
+- **Automática**: Se ejecuta cada 8 horas en segundo plano
+- **Estado**: Verifica en la página Home
+
+La sincronización automática funciona mientras la aplicación esté corriendo.
+""")

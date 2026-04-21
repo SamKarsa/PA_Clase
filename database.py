@@ -105,18 +105,18 @@ class DatabaseClient:
             return 0
         
     
-    def consultar_datos(self, filtro=None, limite=100):
+    def consultar_datos(self, filtro=None, limite=100, skip=0):
         if self.collection is None:
             print(f"Error: No hay conexión a MongoDB")
             return []
-        
+
         try:
             if filtro is None:
                 filtro = {}
-            
+
             print(f"Consultando datos de MongoDB...")
-            
-            cursor = self.collection.find(filtro).limit(limite)
+
+            cursor = self.collection.find(filtro).skip(skip).limit(limite)
             datos = list(cursor)
             
             print(f"Se encontraron {len(datos)} documentos")
