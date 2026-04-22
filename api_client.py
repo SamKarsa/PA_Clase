@@ -22,3 +22,48 @@ class APIClient:
         except requests.exceptions.RequestException as e:
             print (f"error en la consulta: {e}")
             return None
+
+import requests
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
+
+API_URL = os.getenv("API_URL")
+APP_TOKEN = os.getenv("APP_TOKEN")
+
+class APIClient:
+    def __init__(self, url=API_URL):
+        if not url:
+            raise ValueError("API_URL no está definida en el .env")
+        
+        self.url = url
+        self.headers = {
+            "X-App-Token": APP_TOKEN
+        } if APP_TOKEN else {}
+
+    def consultar(self, limite=1000, offset=0):
+        try:
+            params = {
+                "$limit": limite,
+                "$offset": offset
+            }
+
+            response = requests.get(
+                self.url,
+                headers=self.headers,
+                params=params,
+                timeout=30
+            )
+
+            response.raise_for_status()
+            return response.json()
+
+        except requests.exceptions.Timeout:
+            print("⏱️ Error: La petición tardó más de 30 segundos")
+            return []
+
+        except requests.exceptions.RequestException as e:
+            print(f"❌ error en la consulta: {e}")
+            return []
