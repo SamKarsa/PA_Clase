@@ -10,8 +10,12 @@ st.set_page_config(
     layout="wide"
 )
 
+@st.cache_resource
+def get_scheduler():
+    return iniciar_scheduler()
+
 if 'scheduler' not in st.session_state:
-    st.session_state.scheduler = iniciar_scheduler()
+    st.session_state.scheduler = get_scheduler()
 
 pg = st.navigation([
     st.Page("pages/Inicio.py",     title="Inicio",              icon="🏠"),
