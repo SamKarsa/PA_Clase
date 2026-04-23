@@ -116,7 +116,7 @@ with col_izq:
     trend = filtered_df.groupby("fecha")["total"].sum().reset_index()
     fig1 = px.line(trend, x="fecha", y="total", markers=True, title="Evolución mensual")
     fig1.update_traces(line=dict(width=3, color=color))
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width='stretch')
     max_row = trend.loc[trend["total"].idxmax()]
     st.markdown(f"📌 El mayor flujo fue en **{max_row['fecha'].strftime('%Y-%m')}** con **{int(max_row['total']):,} entradas**.")
 
@@ -127,7 +127,7 @@ with col_der:
         "total": [filtered_df["femenino"].sum(), filtered_df["masculino"].sum()]
     })
     fig3 = px.pie(genero_df, names="genero", values="total", hole=0.4, title="Distribución por género")
-    st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig3, width='stretch')
     mayor = genero_df.loc[genero_df["total"].idxmax()]
     st.markdown(f"📌 Predomina el género **{mayor['genero']}**.")
 
@@ -142,7 +142,7 @@ with col_izq2:
     )
     fig2 = px.bar(top, x="total", y="nacionalidad", orientation="h", text="total", title="Top 10 países")
     fig2.update_traces(marker_color=color)
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width='stretch')
     top1 = top.iloc[-1]
     st.markdown(f"📌 **{top1['nacionalidad']}** lidera con **{int(top1['total']):,} entradas**.")
 
@@ -151,7 +151,7 @@ with col_der2:
     heat = filtered_df.pivot_table(values="total", index="anio", columns="mes_num", aggfunc="sum")
     heat.columns = [list(meses_map.keys())[m - 1] for m in heat.columns]
     fig4 = px.imshow(heat, aspect="auto", color_continuous_scale="Blues", title="Patrón estacional")
-    st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig4, width='stretch')
     st.markdown("📌 Se observan patrones repetitivos en ciertos meses, indicando estacionalidad.")
 
 # Fila 3: Mapa
@@ -173,5 +173,5 @@ else:
         color_continuous_scale="Blues",
         title="Distribución global"
     )
-    st.plotly_chart(fig5, use_container_width=True)
+    st.plotly_chart(fig5, width='stretch')
     st.markdown(f"📌 Flujo total: **{int(map_df['total'].sum()):,} registros** ({len(map_df_valido)} países en mapa).")

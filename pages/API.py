@@ -31,10 +31,10 @@ st.markdown("---")
 col1, col2, col3 = st.columns([1, 1, 2])
  
 with col1:
-    btn_sincronizar = st.button("🔄 Sincronizar Ahora", type="primary", use_container_width=True)
+    btn_sincronizar = st.button("🔄 Sincronizar Ahora", type="primary", width='stretch')
 
 with col2:
-    btn_vista_previa = st.button("👁️ Vista Previa", use_container_width=True)
+    btn_vista_previa = st.button("👁️ Vista Previa", width='stretch')
 st.markdown("---")
 
 
@@ -50,7 +50,7 @@ if btn_vista_previa:
             df = pd.DataFrame(datos)
             
             st.subheader("Preview de datos")
-            st.dataframe(df, use_container_width=True, height=400)
+            st.dataframe(df, width='stretch', height=400)
             
             st.info(f"Mostrando solo 10 registros. La sincronización completa traerá ~173,000 registros.")
         else:
@@ -129,7 +129,7 @@ if btn_sincronizar:
 
         st.subheader("Preview de datos sincronizados")
         df_preview = pd.DataFrame(datos_api[:20])
-        st.dataframe(df_preview, use_container_width=True, height=400)
+        st.dataframe(df_preview, width='stretch', height=400)
         
         # Información adicional
         st.info(f"""

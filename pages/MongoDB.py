@@ -87,7 +87,7 @@ if total_docs > 0:
     with col4:
         st.write("")
         st.write("")
-        if st.button("🔄 Limpiar", use_container_width=True):
+        if st.button("🔄 Limpiar", width='stretch'):
             st.session_state.pagina = 1
             st.rerun()
 
@@ -149,7 +149,7 @@ if total_docs > 0:
             columnas_ocultar = ["_id", "_fecha_insercion"]
             df_pagina = df_pagina.drop(columns=columnas_ocultar, errors="ignore")
 
-            st.dataframe(df_pagina, use_container_width=True, height=500)
+            st.dataframe(df_pagina, width='stretch', height=500)
 
             inicio = offset + 1
             fin = min(offset + len(df_pagina), total_filtrado)
