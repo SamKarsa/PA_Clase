@@ -9,9 +9,16 @@ st.title("💾 Datos en MongoDB")
 st.markdown("### Consulta y Visualización de Datos Almacenados")
 st.markdown("---")
 
-db = DatabaseClient()
+@st.cache_resource
+def get_db():
+    db = DatabaseClient()
+    if not db.conectar():
+        return None
+    return db
 
-if not db.conectar():
+db = get_db()
+
+if db is None:
     st.error("❌ No se pudo conectar a MongoDB. Verifica tu configuración.")
     st.stop()
 
@@ -28,55 +35,53 @@ with col1:
     st.metric("📦 Total Registros", f"{total_docs:,}")
 
 if total_docs > 0:
-    # Traer todos los datos necesarios para métricas
-    datos_metricas = db.consultar_datos(limite=total_docs)
-    df_metricas = pd.DataFrame(datos_metricas)
+    @st.cache_data(ttl=300)
+    def cargar_valores_distintos():
+        años = db.obtener_valores_distintos("a_o")
+        nacionalidades = db.obtener_valores_distintos("nacionalidad")
+        meses = db.obtener_valores_distintos("mes")
+        ultima = db.obtener_ultima_insercion()
+        return años, nacionalidades, meses, ultima
+
+    años_distintos, nacionalidades_distintas, meses_distintos, ultima_insercion = cargar_valores_distintos()
 
     with col2:
-        años_unicos = df_metricas["a_o"].nunique() if "a_o" in df_metricas.columns else 0
-        st.metric("📅 Años Únicos", años_unicos)
+        st.metric("📅 Años Únicos", len(años_distintos))
 
     with col3:
-        nacionalidades = df_metricas["nacionalidad"].nunique() if "nacionalidad" in df_metricas.columns else 0
-        st.metric("🌍 Nacionalidades", nacionalidades)
+        st.metric("🌍 Nacionalidades", len(nacionalidades_distintas))
 
     with col4:
-        if "_fecha_insercion" in df_metricas.columns:
-            ultima_fecha = df_metricas["_fecha_insercion"].max()
-            ultima_fecha_txt = ultima_fecha.strftime("%Y-%m-%d %H:%M") if pd.notnull(ultima_fecha) else "N/A"
+        if ultima_insercion:
+            ultima_fecha_txt = pd.Timestamp(ultima_insercion).strftime("%Y-%m-%d %H:%M")
         else:
             ultima_fecha_txt = "N/A"
-
         st.metric("🕒 Última Actualización", ultima_fecha_txt)
 
-st.markdown("---")
+    st.markdown("---")
 
-# -----------------------------
-# FILTROS
-# -----------------------------
-st.subheader("🔍 Filtros de Búsqueda")
+    # -----------------------------
+    # FILTROS
+    # -----------------------------
+    st.subheader("🔍 Filtros de Búsqueda")
 
-if total_docs > 0:
-    # Traer todos los datos solo para construir filtros
-    df_filtros = df_metricas.copy()
+    orden_meses = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ]
 
     col1, col2, col3, col4 = st.columns([2, 2, 2, 1])
 
     with col1:
-        años_disponibles = ["Todos"] + sorted(df_filtros["a_o"].dropna().unique().tolist(), reverse=True)
+        años_disponibles = ["Todos"] + sorted(años_distintos, reverse=True)
         año_seleccionado = st.selectbox("📅 Año:", años_disponibles)
 
     with col2:
-        nacionalidades_disponibles = ["Todos"] + sorted(df_filtros["nacionalidad"].dropna().unique().tolist())
+        nacionalidades_disponibles = ["Todos"] + sorted(nacionalidades_distintas)
         nacionalidad_seleccionada = st.selectbox("🌍 Nacionalidad:", nacionalidades_disponibles)
 
     with col3:
-        orden_meses = [
-            "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-        ]
-        meses_presentes = df_filtros["mes"].dropna().unique().tolist()
-        meses_disponibles = ["Todos"] + [m for m in orden_meses if m in meses_presentes]
+        meses_disponibles = ["Todos"] + [m for m in orden_meses if m in meses_distintos]
         mes_seleccionado = st.selectbox("📆 Mes:", meses_disponibles)
 
     with col4:
@@ -152,8 +157,6 @@ if total_docs > 0:
 
 else:
     st.info("ℹ️ No hay datos en MongoDB. Ve a la página de API para sincronizar datos.")
-
-db.desconectar()
 
 st.markdown("---")
 st.caption("💾 Datos almacenados en MongoDB Atlas")

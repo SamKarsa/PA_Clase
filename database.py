@@ -143,6 +143,31 @@ class DatabaseClient:
             print(f"Error al contar documentos: {e}")
             return 0
         
+    def obtener_valores_distintos(self, campo, filtro=None):
+        if self.collection is None:
+            return []
+        try:
+            if filtro is None:
+                filtro = {}
+            return self.collection.distinct(campo, filtro)
+        except Exception as e:
+            print(f"Error al obtener valores distintos de '{campo}': {e}")
+            return []
+
+    def obtener_ultima_insercion(self):
+        if self.collection is None:
+            return None
+        try:
+            doc = self.collection.find_one(
+                {"_fecha_insercion": {"$exists": True}},
+                sort=[("_fecha_insercion", -1)],
+                projection={"_fecha_insercion": 1}
+            )
+            return doc["_fecha_insercion"] if doc else None
+        except Exception as e:
+            print(f"Error al obtener última inserción: {e}")
+            return None
+
     def desconectar(self):
         if self.client:
             self.client.close()
