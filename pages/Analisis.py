@@ -134,26 +134,48 @@ with col_der:
 # Fila 2: Top nacionalidades + Estacionalidad
 col_izq2, col_der2 = st.columns([2, 3])
 
-with col_izq2:
-    st.subheader("🌎 Top nacionalidades")
-    top = (
-        filtered_df.groupby("nacionalidad")["total"]
-        .sum().sort_values().tail(10).reset_index()
-    )
-    fig2 = px.bar(top, x="total", y="nacionalidad", orientation="h", text="total", title="Top 10 países")
-    fig2.update_traces(marker_color=color)
-    st.plotly_chart(fig2, width='stretch')
-    top1 = top.iloc[-1]
-    st.markdown(f"📌 **{top1['nacionalidad']}** lidera con **{int(top1['total']):,} entradas**.")
+# 🔽 Top nacionalidades
+st.subheader("🌎 Top nacionalidades")
+top = (
+    filtered_df.groupby("nacionalidad")["total"]
+    .sum().sort_values().tail(10).reset_index()
+)
 
-with col_der2:
-    st.subheader("🔥 Estacionalidad")
-    heat = filtered_df.pivot_table(values="total", index="anio", columns="mes_num", aggfunc="sum")
-    heat.columns = [list(meses_map.keys())[m - 1] for m in heat.columns]
-    fig4 = px.imshow(heat, aspect="auto", color_continuous_scale="Blues", title="Patrón estacional")
-    st.plotly_chart(fig4, width='stretch')
-    st.markdown("📌 Se observan patrones repetitivos en ciertos meses, indicando estacionalidad.")
+fig2 = px.bar(
+    top,
+    x="total",
+    y="nacionalidad",
+    orientation="h",
+    text="total",
+    title="Top 10 países"
+)
+fig2.update_traces(marker_color=color)
+st.plotly_chart(fig2, width='stretch')
 
+top1 = top.iloc[-1]
+st.markdown(f"📌 **{top1['nacionalidad']}** lidera con **{int(top1['total']):,} entradas**.")
+
+
+# 🔽 Estacionalidad
+st.subheader("🔥 Estacionalidad")
+heat = filtered_df.pivot_table(
+    values="total",
+    index="anio",
+    columns="mes_num",
+    aggfunc="sum"
+)
+
+heat.columns = [list(meses_map.keys())[m - 1] for m in heat.columns]
+
+fig4 = px.imshow(
+    heat,
+    aspect="auto",
+    color_continuous_scale="Blues",
+    title="Patrón estacional"
+)
+
+st.plotly_chart(fig4, width='stretch')
+st.markdown("📌 Se observan patrones repetitivos en ciertos meses, indicando estacionalidad.")
 # Fila 3: Mapa
 st.subheader("🌍 Mapa de entradas")
 
