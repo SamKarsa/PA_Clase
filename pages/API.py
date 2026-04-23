@@ -18,7 +18,7 @@ st.subheader("⚙️ Configuración")
 col1, col2 = st.columns(2)
  
 with col1:
-    api_url = os.getenv("API_URL", "https://www.datos.gov.co/resource/96sh-4v8d.json")
+    api_url = os.getenv("API_URL", "https://www.datos.gov.co/resource/96sh-4v8d.json?$limit=100000")
     st.text_input("URL de la API:", value=api_url, disabled=True)
  
 with col2:
