@@ -109,3 +109,79 @@ Visualizaciones interactivas con filtros por año y nacionalidad:
 - Distribución por género (donut)
 - Estacionalidad por mes/año (heatmap)
 - Distribución geográfica mundial (mapa choropleth)
+
+# Análisis de Extranjeros en Colombia
+
+Este proyecto presenta un análisis exploratorio de los flujos de entrada de extranjeros a Colombia a lo largo del tiempo, destacando tendencias, nacionalidades predominantes, distribución demográfica y patrones estacionales.
+
+## Indicadores principales
+
+- **Total de registros:** 22,178,592 entradas de extranjeros  
+- **País de origen principal:** Venezuela (República Bolivariana de)  
+- **Año con mayor flujo:** 2018  
+
+Estos indicadores muestran una alta concentración de entradas en un periodo reciente, con un claro protagonismo de un país en particular.
+
+## Tendencia en el tiempo
+
+El análisis de la evolución mensual evidencia:
+
+- Un crecimiento sostenido desde 2012 hasta aproximadamente 2018  
+- A partir de 2016, el crecimiento se vuelve más acelerado  
+- Picos importantes entre 2017 y 2019, con valores cercanos a 400 mil entradas mensuales  
+- Una caída abrupta hacia 2020, posiblemente asociada a factores externos como restricciones globales de movilidad  
+
+En general, la tendencia refleja un aumento significativo en la llegada de extranjeros durante la segunda mitad de la década analizada.
+
+## Distribución por género
+
+- **Masculino:** 58.4%  
+- **Femenino:** 41.6%  
+
+Existe una mayor proporción de hombres en los registros, aunque la participación femenina es considerable, lo que sugiere flujos relativamente equilibrados.
+
+## Top nacionalidades
+
+Las 10 principales nacionalidades concentran una parte significativa del total de entradas:
+
+1. Venezuela (4,764,555)  
+2. Estados Unidos (3,880,997)  
+3. Argentina (1,246,447)  
+4. Brasil (1,218,000)  
+5. Ecuador (1,197,080)  
+6. México (1,179,849)  
+7. Perú (1,084,793)  
+8. España (964,782)  
+9. Chile (936,029)  
+10. Panamá (581,231)  
+
+**Hallazgos clave:**
+
+- Venezuela lidera ampliamente, superando por gran margen al resto de países  
+- Predominan países de América Latina, lo que evidencia una fuerte dinámica regional  
+- Estados Unidos destaca como principal origen extrarregional  
+
+## Estacionalidad
+
+El análisis por meses y años muestra patrones repetitivos que indican la presencia de estacionalidad:
+
+- Incrementos frecuentes a mitad de año (junio a agosto)  
+- Aumentos adicionales en algunos casos hacia finales de año  
+- Mayores volúmenes entre 2017 y 2019  
+- Disminución atípica en 2020 que rompe el patrón  
+
+Estos comportamientos sugieren que los flujos migratorios están influenciados por factores cíclicos como temporadas vacacionales o dinámicas económicas.
+
+## Distribución global
+
+De manera general:
+
+- La mayoría de los visitantes provienen del continente americano  
+- Existe una menor, pero relevante, participación de países europeos  
+
+## Conclusiones
+
+- Colombia experimentó un incremento notable en la llegada de extranjeros, especialmente entre 2016 y 2019  
+- La migración está altamente concentrada en países cercanos, con Venezuela como principal origen  
+- Existen patrones estacionales claros que pueden ser útiles para planificación en distintos sectores  
+- Eventos globales recientes impactaron directamente la movilidad internacional, reflejado en la caída de 2020  
